@@ -42,7 +42,7 @@ class Block:
 
 
 
-class Tetris:
+class Tytris:
     level = 2
     score = 0
     state = "start"
@@ -165,7 +165,7 @@ def startGame():
     done = False
     clock = pygame.time.Clock()
     fps = 25
-    game = Tetris(20, 10)
+    game = Tytris(20, 10)
     counter = 0
 
     pressing_down = False
@@ -243,7 +243,7 @@ def startGame():
 
 
 screen = pygame.display.set_mode((width, height))
-pygame.display.set_caption("Tetris by DataFlair")
+pygame.display.set_caption("Tytris by DataFlair")
 run = True
 while run:
     screen.fill((16, 57, 34 ))
