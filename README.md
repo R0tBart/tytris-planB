@@ -1,6 +1,6 @@
-# Tetris in Python – Agile Entwicklung mit SCRUM 🎮  
+# Tytris in Python – Agile Entwicklung mit SCRUM 🎮  
 
-Willkommen zu meinem **Tetris-Projekt**, entwickelt in **Python** unter Verwendung agiler **SCRUM-Methoden**.  
+Willkommen zu meinem **Tytris-Projekt**, entwickelt in **Python** unter Verwendung agiler **SCRUM-Methoden**.  
 Diese README enthält eine Übersicht über das Projekt, den Entwicklungsprozess und ein Präsentationsvideo mit einer **natürlich klingenden KI-Stimme**.  
 
 ---
@@ -18,7 +18,7 @@ Diese README enthält eine Übersicht über das Projekt, den Entwicklungsprozess
 
 ## 🎥 Projektvorstellung – Video mit natürlicher KI-Stimme  
 
-[![Tetris Video](https://img.youtube.com/vi/DEIN_VIDEO_ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=bRrIhgn52m0&list=PLLBWNs6n7YMVd2GIxqYhRJsbqeirdVxtd)  
+[![Tytris Video](https://img.youtube.com/vi/DEIN_VIDEO_ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=bRrIhgn52m0&list=PLLBWNs6n7YMVd2GIxqYhRJsbqeirdVxtd)  
 *Klicke auf das Bild, um das Video anzusehen!*  
 
 Das Video wurde mit **KI-gestütztem Voice-over** erstellt, das durch gezielte Bearbeitung menschlicher wirkt. Die Schritte:  
@@ -38,7 +38,7 @@ Hier ist ein Überblick über die wichtigsten Sprints:
 |--------|------|--------|
 | 🚀 **Sprint 1** | Spiellogik & Grundstruktur | ✅ Abgeschlossen |
 | 🎮 **Sprint 2** | Blockbewegung & Kollisionen | ✅ Abgeschlossen |
-| 🔊 **Sprint 3** | Soundeffekte & UI-Optimierung | 🔄 In Arbeit |
+| 🔊 **Sprint 3** | Soundeffekte & UI-Optimierung | ⏳ Geplant  |
 | 🏆 **Sprint 4** | Highscore & Animationen | ⏳ Geplant |
 
 ---
@@ -48,7 +48,7 @@ Hier ist ein Überblick über die wichtigsten Sprints:
 1. **Repository klonen:**  
    ```bash
    git clone https://github.com/DEIN_GITHUB/tetris-python.git
-   cd tetris-python
+   cd tytris-python
 
 2. **Abhänigkeiten instalieren**
    ```bash
