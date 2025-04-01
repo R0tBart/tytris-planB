@@ -70,15 +70,15 @@ Falls du das Spiel in einem **Docker-Container** ausführen möchtest:
 ````bash
 docker build -t tetris-game .
 docker run -p 8080:80 tetris-game
-````
-Dann im Browser öffnen: \`http://localhost:8080\`
 
+Dann im Browser öffnen: \`http://localhost:8080\`
+````
 
 ## 🤝 Mitwirken (SCRUM-Prozess für Contributors)  
 📌 Dieses Projekt nutzt **SCRUM als agiles Framework**, um es **kontinuierlich zu verbessern**. Wenn du mitmachen möchtest:  
 
 1. **Neues Feature oder Bug melden:** Erstelle ein **Issue**  
-2. **Forke das Repository & entwickle in einem Feature-Branch**  
+2. **Forke das Repository & entwickle in einem Feature-Branch**  https://github.com/R0tBart/tytris-planB
 3. **Pull-Request (PR) stellen & am Code-Review teilnehmen**  
 
 ---
@@ -90,7 +90,3 @@ Dann im Browser öffnen: \`http://localhost:8080\`
 
 ✨ **Viel Spaß beim Spielen & Entwickeln!** 🚀👾
 
-## Wenn ihr mitmachen möchtet forckt das Repo und macht einfach mit! 
-
-Wir würden uns freuen!
-https://github.com/R0tBart/tytris-planB
