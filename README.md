@@ -45,9 +45,7 @@ Die Entwicklung erfolgte in **agilen Sprints**, um eine iterative Verbesserung d
 ````plaintext
 /tetris
 │── index.html       # Hauptdatei mit Spielfläche & Steuerung
-│── style.css        # Styling & Animationen
 │── script.js        # Spiellogik (Tetrominos, Kollisionen, Steuerung)
-│── assets/          # Bilder & Sounds für das Spiel
 │── README.md        # Projektbeschreibung & Anleitung
 │── Dockerfile       # Containerisierung für einfaches Deployment
 ````
