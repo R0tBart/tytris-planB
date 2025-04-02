@@ -5,7 +5,7 @@
 Dieses **Tytris-Spiel** wurde mit **HTML, CSS und JavaScript** entwickelt und folgt den Prinzipien von **SCRUM** als agilem Entwicklungsprozess. Ziel war es, ein **klassisches Tytris-Spiel** als Webanwendung zu programmieren, die in einem modernen Browser spielbar ist.
 
 - **Technologien:** HTML, CSS, JavaScript  
-- **Deployment:** Docker & GitHub Pages  
+- **Deployment:** kommt in dem nächsten sprint!          versprochen!Docker & GitHub Pages  
 - **SCRUM-Framework:** Sprint-Planung, Daily Stand-ups, Reviews  
 
 ---
