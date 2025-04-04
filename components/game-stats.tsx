@@ -4,10 +4,11 @@ import type { GameStatsProps } from "@/types/tetris-types"
 export default function GameStats({ score, rows, level, nextPiece, isSmallScreen = false }: GameStatsProps) {
   // Render the next piece preview
   const renderNextPiece = () => {
-    if (!nextPiece) return null
+    if (!nextPiece) {
+      return null
+    }
 
-    const shape = TETROMINOS[nextPiece].shape[0]
-    const color = TETROMINOS[nextPiece].color
+    const { shape: [shape], color } = TETROMINOS[nextPiece]
 
     // Calculate dimensions for centering
     const width = shape[0].length

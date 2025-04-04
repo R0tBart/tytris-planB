@@ -11,12 +11,14 @@ export default function GameBoard({
 }: GameBoardProps) {
   // Render the current piece on top of the board
   const renderCurrentPiece = () => {
-    if (!currentPiece) return null
+    if (!currentPiece) {
+      return null
+    }
 
-    const shape = TETROMINOS[currentPiece].shape[rotation]
-    const color = TETROMINOS[currentPiece].color
+    const { shape, color } = TETROMINOS[currentPiece]
+    const currentShape = shape[rotation]
 
-    return shape.map((row, y) =>
+    return currentShape.map((row, y) =>
       row.map((cell, x) => {
         if (cell !== 0) {
           const boardX = x + position.x
