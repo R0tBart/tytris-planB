@@ -6,10 +6,17 @@ import { useWindowSize } from "@/hooks/use-window-size"
 import GameBoard from "./game-board"
 import GameStats from "./game-stats"
 import GameControls from "./game-controls"
+import GameOverOverlay from "./game-over-overlay"
 import { createEmptyBoard, checkCollision, getRandomPiece, TETROMINOS } from "@/lib/tetris-utils"
+import { soundManager } from "@/lib/sound-manager"
 import type { Board, Position } from "@/types/tetris-types"
+import { Volume2, VolumeX } from "lucide-react"
 
 export default function TetrisGame() {
+  // Verwende einen State, um zu prüfen, ob wir auf dem Client sind
+  const [isMounted, setIsMounted] = useState(false)
+  const [isMuted, setIsMuted] = useState(false)
+
   const { width, height } = useWindowSize()
   const isSmallScreen = width < 640
   const isMediumScreen = width >= 640 && width < 1024
@@ -27,8 +34,18 @@ export default function TetrisGame() {
   const [position, setPosition] = useState<Position>({ x: 0, y: 0 })
   const [rotation, setRotation] = useState<number>(0)
 
+  // Setze isMounted auf true, wenn die Komponente auf dem Client gemountet wird
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
+
   // Berechne die optimale Spielfeldgröße basierend auf der Bildschirmgröße
   const calculateBoardSize = useCallback(() => {
+    if (!isMounted) {
+      // Standardwerte für Server-Rendering
+      return { width: 300, height: 600 }
+    }
+
     if (isSmallScreen) {
       // Für kleine Bildschirme (Mobilgeräte)
       const boardWidth = Math.min(width * 0.9, 300)
@@ -45,9 +62,17 @@ export default function TetrisGame() {
       const boardWidth = boardHeight / 2
       return { width: boardWidth, height: boardHeight }
     }
-  }, [height, isMediumScreen, isSmallScreen, width])
+  }, [height, isMediumScreen, isSmallScreen, width, isMounted])
 
   const boardSize = calculateBoardSize()
+
+  // Sound-Steuerung
+  const toggleMute = useCallback(() => {
+    if (soundManager) {
+      const muted = soundManager.toggleMute()
+      setIsMuted(muted)
+    }
+  }, [])
 
   // Initialize game
   const startGame = useCallback(() => {
@@ -71,7 +96,12 @@ export default function TetrisGame() {
       y: 0,
     })
     setRotation(0)
-  }, [])
+
+    // Spiele Thema-Musik
+    if (soundManager && !isMuted) {
+      soundManager.playTheme()
+    }
+  }, [isMuted])
 
   // Move piece horizontally
   const movePiece = useCallback(
@@ -79,10 +109,14 @@ export default function TetrisGame() {
       if (!gameOver && gameStarted && currentPiece) {
         if (!checkCollision(board, currentPiece, position.x + dir, position.y, rotation)) {
           setPosition((prev) => ({ ...prev, x: prev.x + dir }))
+          // Spiele Bewegungssound
+          if (soundManager && !isMuted) {
+            soundManager.playSound("move")
+          }
         }
       }
     },
-    [board, currentPiece, gameOver, gameStarted, position.x, position.y, rotation],
+    [board, currentPiece, gameOver, gameStarted, position.x, position.y, rotation, isMuted],
   )
 
   // Rotate piece
@@ -91,9 +125,13 @@ export default function TetrisGame() {
       const newRotation = (rotation + 1) % 4
       if (!checkCollision(board, currentPiece, position.x, position.y, newRotation)) {
         setRotation(newRotation)
+        // Spiele Rotationssound
+        if (soundManager && !isMuted) {
+          soundManager.playSound("rotate")
+        }
       }
     }
-  }, [board, currentPiece, gameOver, gameStarted, position.x, position.y, rotation])
+  }, [board, currentPiece, gameOver, gameStarted, position.x, position.y, rotation, isMuted])
 
   // Drop piece one row
   const dropPiece = useCallback(() => {
@@ -115,9 +153,13 @@ export default function TetrisGame() {
         newY += 1
       }
       setPosition((prev) => ({ ...prev, y: newY }))
+      // Spiele Drop-Sound
+      if (soundManager && !isMuted) {
+        soundManager.playSound("drop")
+      }
       updateBoard()
     }
-  }, [board, currentPiece, gameOver, gameStarted, position.x, position.y, rotation])
+  }, [board, currentPiece, gameOver, gameStarted, position.x, position.y, rotation, isMuted])
 
   // Update the board when a piece lands
   const updateBoard = useCallback(() => {
@@ -166,6 +208,11 @@ export default function TetrisGame() {
         }
         return newRows
       })
+
+      // Spiele Clear-Sound
+      if (soundManager && !isMuted) {
+        soundManager.playSound("clear")
+      }
     }
 
     // Set the new board
@@ -188,8 +235,16 @@ export default function TetrisGame() {
     if (checkCollision(newBoard, nextPiece, Math.floor((10 - newPieceWidth) / 2), 0, 0)) {
       setGameOver(true)
       setDropTime(null)
+
+      // Stoppe Thema-Musik und spiele Game-Over-Sound
+      if (soundManager) {
+        soundManager.stopTheme()
+        if (!isMuted) {
+          soundManager.playSound("gameover")
+        }
+      }
     }
-  }, [board, currentPiece, level, nextPiece, position.x, position.y, rotation])
+  }, [board, currentPiece, level, nextPiece, position.x, position.y, rotation, isMuted])
 
   // Handle key presses
   useEffect(() => {
@@ -218,6 +273,9 @@ export default function TetrisGame() {
         case 32: // Space
           dropPieceToBottom()
           break
+        case 77: // M key for mute
+          toggleMute()
+          break
         default:
           break
       }
@@ -227,48 +285,69 @@ export default function TetrisGame() {
     return () => {
       document.removeEventListener("keydown", handleKeyDown)
     }
-  }, [dropPiece, dropPieceToBottom, gameOver, gameStarted, movePiece, rotatePiece, startGame])
+  }, [dropPiece, dropPieceToBottom, gameOver, gameStarted, movePiece, rotatePiece, startGame, toggleMute])
 
   // Auto drop piece
   useInterval(() => {
     dropPiece()
   }, dropTime)
 
+  // Cleanup beim Unmount
+  useEffect(() => {
+    return () => {
+      if (soundManager) {
+        soundManager.stopTheme()
+      }
+    }
+  }, [])
+
+  // Verwende ein konsistentes Layout für Server- und Client-Rendering
+  const layoutClassName = isMounted
+    ? `flex ${isSmallScreen ? "flex-col" : isLargeScreen ? "flex-row" : "flex-col md:flex-row"} gap-6 items-center justify-center max-w-full`
+    : "flex flex-row gap-6 items-center justify-center max-w-full"
+
+  const statsContainerClassName = isMounted
+    ? `flex ${isSmallScreen ? "flex-row" : isLargeScreen ? "flex-col" : "flex-row md:flex-col"} gap-4 flex-wrap justify-center`
+    : "flex flex-col gap-4 flex-wrap justify-center"
+
   return (
-    <div
-      className={`
-      flex 
-      ${isSmallScreen ? "flex-col" : isLargeScreen ? "flex-row" : "flex-col md:flex-row"} 
-      gap-6 items-center justify-center
-      max-w-full
-    `}
-    >
-      <GameBoard
-        board={board}
-        currentPiece={currentPiece}
-        position={position}
-        rotation={rotation}
-        width={boardSize.width}
-        height={boardSize.height}
-      />
-      <div
-        className={`
-        flex 
-        ${isSmallScreen ? "flex-row" : isLargeScreen ? "flex-col" : "flex-row md:flex-col"} 
-        gap-4 flex-wrap justify-center
-      `}
+    <div className="relative">
+      {/* Sound-Steuerung */}
+      <button
+        onClick={toggleMute}
+        className="absolute top-2 right-2 z-10 p-2 bg-slate-800 rounded-full hover:bg-slate-700 transition-colors"
+        aria-label={isMuted ? "Ton einschalten" : "Ton ausschalten"}
       >
-        <GameStats score={score} rows={rows} level={level} nextPiece={nextPiece} isSmallScreen={isSmallScreen} />
-        <GameControls
-          gameStarted={gameStarted}
-          gameOver={gameOver}
-          onStart={startGame}
-          onMove={movePiece}
-          onRotate={rotatePiece}
-          onDrop={dropPiece}
-          onDropToBottom={dropPieceToBottom}
-          isSmallScreen={isSmallScreen}
-        />
+        {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+      </button>
+
+      <div className={layoutClassName}>
+        <div className="relative">
+          <GameBoard
+            board={board}
+            currentPiece={currentPiece}
+            position={position}
+            rotation={rotation}
+            width={boardSize.width}
+            height={boardSize.height}
+          />
+          {gameOver && <GameOverOverlay score={score} level={level} rows={rows} onRestart={startGame} />}
+        </div>
+        <div className={statsContainerClassName}>
+          <GameStats score={score} rows={rows} level={level} nextPiece={nextPiece} isSmallScreen={isSmallScreen} />
+          <GameControls
+            gameStarted={gameStarted}
+            gameOver={gameOver}
+            onStart={startGame}
+            onMove={movePiece}
+            onRotate={rotatePiece}
+            onDrop={dropPiece}
+            onDropToBottom={dropPieceToBottom}
+            onToggleMute={toggleMute}
+            isMuted={isMuted}
+            isSmallScreen={isSmallScreen}
+          />
+        </div>
       </div>
     </div>
   )

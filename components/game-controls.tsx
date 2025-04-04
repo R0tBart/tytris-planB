@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, RotateCw, MoveVertical } from "lucide-react"
+import { ArrowDown, ArrowLeft, ArrowRight, RotateCw, MoveVertical, Volume2, VolumeX } from "lucide-react"
 import type { GameControlsProps } from "@/types/tetris-types"
 
 export default function GameControls({
@@ -12,6 +12,8 @@ export default function GameControls({
   onRotate,
   onDrop,
   onDropToBottom,
+  onToggleMute,
+  isMuted = false,
   isSmallScreen = false,
 }: GameControlsProps) {
   // Touch-Steuerung für Desktop-Touchscreens und Tablets
@@ -55,12 +57,12 @@ export default function GameControls({
         <span className="mt-1 text-slate-400 text-[10px] sm:text-xs">Fallen</span>
       </button>
 
-      <div className="flex flex-col items-center">
-        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-md bg-slate-800 flex items-center justify-center opacity-0">
-          <ArrowUp size={isSmallScreen ? 16 : 18} />
+      <button className="flex flex-col items-center touch-manipulation" onClick={() => onToggleMute && onToggleMute()}>
+        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-md bg-slate-800 flex items-center justify-center">
+          {isMuted ? <VolumeX size={isSmallScreen ? 16 : 18} /> : <Volume2 size={isSmallScreen ? 16 : 18} />}
         </div>
-        <span className="mt-1 text-transparent text-[10px] sm:text-xs">Drehen</span>
-      </div>
+        <span className="mt-1 text-slate-400 text-[10px] sm:text-xs">Ton</span>
+      </button>
     </div>
   )
 
@@ -81,6 +83,17 @@ export default function GameControls({
           >
             {gameOver ? "Neu starten" : "Spiel starten"}
           </Button>
+
+          {/* Sound-Steuerung */}
+          <div className="mt-2 flex justify-center">
+            <button
+              onClick={() => onToggleMute && onToggleMute()}
+              className="flex items-center gap-1 text-xs text-slate-400 hover:text-white"
+            >
+              {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
+              <span>{isMuted ? "Ton ein" : "Ton aus"}</span>
+            </button>
+          </div>
         </div>
       ) : (
         <div className="space-y-2 sm:space-y-4">

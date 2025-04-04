@@ -1,26 +1,24 @@
-// Typen für das Tetris-Spiel
-export interface BoardCell {
+export interface Cell {
   color: string
   merged: boolean
 }
 
-export type Board = (BoardCell | null)[][]
+export type Board = (Cell | null)[][]
 
 export interface Position {
   x: number
   y: number
 }
 
-export interface TetrominoShape {
+export interface TetrominoData {
   shape: number[][][]
   color: string
 }
 
 export interface Tetrominos {
-  [key: string]: TetrominoShape
+  [key: string]: TetrominoData
 }
 
-// Props für die Komponenten
 export interface GameBoardProps {
   board: Board
   currentPiece: string | null
@@ -46,6 +44,8 @@ export interface GameControlsProps {
   onRotate?: () => void
   onDrop?: () => void
   onDropToBottom?: () => void
+  onToggleMute?: () => void
+  isMuted?: boolean
   isSmallScreen?: boolean
 }
 
