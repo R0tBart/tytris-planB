@@ -64,13 +64,11 @@ export default function GameControls({
     </div>
   )
 
+  // Verwende konsistente Klassennamen für Server- und Client-Rendering
+  const containerClassName = `bg-slate-900 p-3 sm:p-4 rounded-md border border-slate-700 shadow-md ${isSmallScreen ? "w-[140px] sm:w-[160px]" : "w-full max-w-[200px]"}`
+
   return (
-    <div
-      className={`
-      bg-slate-900 p-3 sm:p-4 rounded-md border border-slate-700 shadow-md
-      ${isSmallScreen ? "w-[140px] sm:w-[160px]" : "w-full max-w-[200px]"}
-    `}
-    >
+    <div className={containerClassName}>
       {!gameStarted || gameOver ? (
         <div className="text-center">
           <h3 className="text-base sm:text-lg font-bold mb-1 sm:mb-2">{gameOver ? "Game Over" : "Tetris"}</h3>
