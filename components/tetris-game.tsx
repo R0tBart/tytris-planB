@@ -106,13 +106,16 @@ export default function TetrisGame() {
   // Move piece horizontally
   const movePiece = useCallback(
     (dir: number) => {
-      if (!gameOver && gameStarted && currentPiece) {
-        if (!checkCollision(board, currentPiece, position.x + dir, position.y, rotation)) {
-          setPosition((prev) => ({ ...prev, x: prev.x + dir }))
-          // Spiele Bewegungssound
-          if (soundManager && !isMuted) {
-            soundManager.playSound("move")
-          }
+      if (
+        !gameOver &&
+        gameStarted &&
+        currentPiece &&
+        !checkCollision(board, currentPiece, position.x + dir, position.y, rotation)
+      ) {
+        setPosition((prev) => ({ ...prev, x: prev.x + dir }))
+        // Spiele Bewegungssound
+        if (soundManager && !isMuted) {
+          soundManager.playSound("move")
         }
       }
     },
@@ -163,12 +166,14 @@ export default function TetrisGame() {
 
   // Update the board when a piece lands
   const updateBoard = useCallback(() => {
-    if (!currentPiece || !nextPiece) return
+    if (!currentPiece || !nextPiece) {
+      return
+    }
 
     // Create a new board with the current piece merged in
     const newBoard = [...board]
     const shape = TETROMINOS[currentPiece].shape[rotation]
-    const color = TETROMINOS[currentPiece].color
+    const { color } = TETROMINOS[currentPiece]
 
     for (let y = 0; y < shape.length; y++) {
       for (let x = 0; x < shape[y].length; x++) {
@@ -255,7 +260,9 @@ export default function TetrisGame() {
         return
       }
 
-      if (gameOver) return
+      if (gameOver) {
+        return
+      }
 
       switch (e.keyCode) {
         case 37: // Left arrow

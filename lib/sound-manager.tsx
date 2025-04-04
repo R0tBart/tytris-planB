@@ -29,7 +29,9 @@ class SoundManager {
   }
 
   playSound(name: string): void {
-    if (this.muted || typeof window === "undefined") return
+    if (this.muted || typeof window === "undefined") {
+      return
+    }
 
     const sound = this.sounds[name]
     if (sound) {
@@ -39,13 +41,17 @@ class SoundManager {
   }
 
   playTheme(): void {
-    if (this.muted || typeof window === "undefined" || !this.themeSound) return
+    if (this.muted || typeof window === "undefined" || !this.themeSound) {
+        return
+    }
     this.themeSound.currentTime = 0
     this.themeSound.play().catch((e) => console.log("Theme play error:", e))
   }
 
   stopTheme(): void {
-    if (typeof window === "undefined" || !this.themeSound) return
+    if (typeof window === "undefined" || !this.themeSound) {
+        return
+    }
     this.themeSound.pause()
     this.themeSound.currentTime = 0
   }
