@@ -69,7 +69,7 @@ export default function GameOverOverlay({ score, level, rows, onRestart }: GameO
                 onClick={onRestart}
                 className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 px-4 rounded"
               >
-                Neues Spiel starten
+                Wenn du möchtest, kannst du hier ein Neues Spiel starten! 💀
               </Button>
             </motion.div>
           </motion.div>
