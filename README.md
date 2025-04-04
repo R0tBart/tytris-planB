@@ -84,9 +84,9 @@ Es gibt eine einfache Möglichkeit, den Highscore lokal (oder später via Backen
 bash
 Kopieren
 /tetris
-│── index.html       # Hauptdatei mit Spielfläche & Steuerung
-│── script.js        # Spiellogik (Tetrominos, Kollisionen, Steuerung)
-│── README.md        # Projektbeschreibung & Anleitung
+│── index.html # Hauptdatei mit Spielfläche & Steuerung
+│── script.js # Spiellogik (Tetrominos, Kollisionen, Steuerung)
+│── README.md # Projektbeschreibung & Anleitung
 📦 Installation & Lokales Testing
 1️⃣ Lokale Ausführung
 Klone das Repository:
