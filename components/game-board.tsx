@@ -11,12 +11,14 @@ export default function GameBoard({
 }: GameBoardProps) {
   // Render the current piece on top of the board
   const renderCurrentPiece = () => {
-    if (!currentPiece) return null
+    if (!currentPiece) {
+      return null
+    }
 
-    const shape = TETROMINOS[currentPiece].shape[rotation]
-    const color = TETROMINOS[currentPiece].color
+    const { shape, color } = TETROMINOS[currentPiece]
+    const currentShape = shape[rotation]
 
-    return shape.map((row, y) =>
+    return currentShape.map((row, y) =>
       row.map((cell, x) => {
         if (cell !== 0) {
           const boardX = x + position.x
@@ -45,15 +47,18 @@ export default function GameBoard({
     )
   }
 
+  // Stelle sicher, dass die Stile als Objekt und nicht als String übergeben werden
+  const boardStyle = {
+    width: `${width}px`,
+    height: `${height}px`,
+    maxWidth: "100%",
+    maxHeight: "80vh",
+  }
+
   return (
     <div
       className="relative bg-slate-950 border-2 border-slate-700 rounded-md overflow-hidden shadow-lg"
-      style={{
-        width: `${width}px`,
-        height: `${height}px`,
-        maxWidth: "100%",
-        maxHeight: "80vh",
-      }}
+      style={boardStyle}
     >
       {/* Grid lines */}
       <div className="absolute inset-0 grid grid-cols-10 grid-rows-20 opacity-10">

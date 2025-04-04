@@ -8,28 +8,29 @@ interface WindowSize {
 }
 
 export function useWindowSize(): WindowSize {
+  // Standardwerte für Server-Rendering
   const [windowSize, setWindowSize] = useState<WindowSize>({
-    width: typeof window !== "undefined" ? window.innerWidth : 0,
-    height: typeof window !== "undefined" ? window.innerHeight : 0,
+    width: 1024, // Standardwert für Desktop
+    height: 768,
   })
 
+  // useEffect wird nur auf dem Client ausgeführt
   useEffect(() => {
-    // Handler to call on window resize
+    // Handler zum Aktualisieren der Fenstergröße
     function handleResize() {
-      // Set window width/height to state
       setWindowSize({
         width: window.innerWidth,
         height: window.innerHeight,
       })
     }
 
-    // Add event listener
-    window.addEventListener("resize", handleResize)
-
-    // Call handler right away so state gets updated with initial window size
+    // Fenstergröße initial setzen
     handleResize()
 
-    // Remove event listener on cleanup
+    // Event-Listener hinzufügen
+    window.addEventListener("resize", handleResize)
+
+    // Event-Listener beim Cleanup entfernen
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 

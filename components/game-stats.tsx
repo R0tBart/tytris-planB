@@ -4,10 +4,11 @@ import type { GameStatsProps } from "@/types/tetris-types"
 export default function GameStats({ score, rows, level, nextPiece, isSmallScreen = false }: GameStatsProps) {
   // Render the next piece preview
   const renderNextPiece = () => {
-    if (!nextPiece) return null
+    if (!nextPiece) {
+      return null
+    }
 
-    const shape = TETROMINOS[nextPiece].shape[0]
-    const color = TETROMINOS[nextPiece].color
+    const { shape: [shape], color } = TETROMINOS[nextPiece]
 
     // Calculate dimensions for centering
     const width = shape[0].length
@@ -45,14 +46,13 @@ export default function GameStats({ score, rows, level, nextPiece, isSmallScreen
     )
   }
 
+  // Verwende konsistente Klassennamen für Server- und Client-Rendering
+  const containerClassName = `bg-slate-900 p-3 sm:p-4 rounded-md border border-slate-700 shadow-md ${isSmallScreen ? "w-[140px] sm:w-[160px]" : "w-full max-w-[200px]"}`
+  const contentClassName = isSmallScreen ? "space-y-2" : "space-y-4"
+
   return (
-    <div
-      className={`
-      bg-slate-900 p-3 sm:p-4 rounded-md border border-slate-700 shadow-md
-      ${isSmallScreen ? "w-[140px] sm:w-[160px]" : "w-full max-w-[200px]"}
-    `}
-    >
-      <div className={`${isSmallScreen ? "space-y-2" : "space-y-4"}`}>
+    <div className={containerClassName}>
+      <div className={contentClassName}>
         <div>
           <h3 className="text-xs sm:text-sm font-medium text-slate-400">Next Piece</h3>
           <div className="mt-1 sm:mt-2 flex justify-center">{renderNextPiece()}</div>
