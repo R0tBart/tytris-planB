@@ -32,3 +32,12 @@
 **/dist
 LICENSE
 README.md
+node_modules
+.next
+pnpm-lock.yaml
+Dockerfile
+docker-compose.yml
+.git
+.gitignore
+README.md
+*.log
