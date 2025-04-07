@@ -10,7 +10,7 @@
 
 ```bash
 git clone https://github.com/R0tBart/tytris-planB
-cd modern-tetris
+cd tytris-planB
 ```
 
 ### 2. Abhängigkeiten installieren
