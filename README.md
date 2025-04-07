@@ -1,120 +1,97 @@
-🎮 Tytris – Ein responsives HTML Tetris-Game
-📌 Projektbeschreibung
-Tytris ist ein klassisches Tetris-Spiel, das in HTML, CSS und JavaScript entwickelt wurde und direkt im Browser spielbar ist. Ziel des Projekts ist es, ein responsives, funktionierendes und plattformübergreifendes Tetris zu erstellen, das sowohl auf Desktop- als auch auf mobilen Geräten gut spielbar ist. Die Entwicklung folgt einem agilen SCRUM-Prozess, um eine kontinuierliche Verbesserung des Spiels zu gewährleisten.
+# 🎮 Modern Tetris Game
 
-Technologien: HTML, CSS, JavaScript
-SCRUM-Framework: Sprint-Planung, Daily Stand-ups, Reviews
+> Eine moderne Interpretation des klassischen Tetris, umgesetzt mit **React**, **Next.js**, **Tailwind CSS** und **TypeScript** – mit Fokus auf modularer Struktur und Benutzerfreundlichkeit. Ziel des Projekts ist es, ein responsives, funktionierendes und plattformübergreifendes Tetris zu erstellen, das sowohl auf Desktop- als auch auf mobilen Geräten gut spielbar ist. Die Entwicklung folgt einem agilen SCRUM-Prozess, um eine kontinuierliche Verbesserung des Spiels zu gewährleisten.
 
-📜 Product Backlog & User Stories
-🏁 User Story 1: Grundlegendes Spiel
-Beschreibung:
-Als Spieler möchte ich ein funktionierendes HTML-basiertes Tetris-Game, um das klassische Spiel im Browser zu spielen.
+---
 
-Akzeptanzkriterien:
+## 🚀 Schnellstart
 
-Das Spiel startet im Browser und zeigt ein Spielfeld an.
+### 1. Repository klonen
 
-Die Steuerung (Pfeiltasten, Space zum schnellen Fallen) reagiert korrekt.
+```bash
+git clone https://github.com/yourusername/modern-tetris.git
+cd modern-tetris
+```
 
-Punktestand und aktueller Level werden angezeigt.
+### 2. Abhängigkeiten installieren
 
-Das Spiel endet bei Spielüber (Game Over).
+```bash
+pnpm install
+# oder
+npm install
+```
 
-📱 User Story 2: Responsives Design
-Beschreibung:
-Als Spieler möchte ich, dass das Spiel auf verschiedenen Bildschirmgrößen (Desktop, Tablet, Smartphone) gut aussieht und bedienbar ist.
+### 3. Dev-Server starten
 
-Akzeptanzkriterien:
+```bash
+pnpm dev
+# oder
+npm run dev
+```
 
-Das Layout passt sich dynamisch an unterschiedliche Bildschirmgrößen an.
+---
 
-Bedienelemente und Spielfeld bleiben auch auf kleineren Displays gut nutzbar.
+## 🧩 Features
 
-🌐 User Story 3: Cross-Browser-Kompatibilität
-Beschreibung:
-Als Product Owner möchte ich, dass das Spiel in allen gängigen Browsern (Chrome, Firefox, Edge, Safari) fehlerfrei läuft.
+- 🎨 Modernes UI mit Tailwind CSS
+- ⚛️ React & Next.js Architektur
+- 🧱 Dynamische Spiellogik (Tetris)
+- ⌨️ Intuitive Steuerung mit Tastatur
+- 🎞️ Game Over Animation (Framer Motion)
+- 🐳 Docker-Setup für einfaches Deployment
 
-Akzeptanzkriterien:
+---
 
-Das Spiel startet in den Zielbrowsern ohne sichtbare Fehler.
+## ⚙️ Technologien
 
-Alle Spielmechaniken funktionieren browserübergreifend identisch.
+- [Next.js](https://nextjs.org/)
+- [React](https://reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Framer Motion](https://www.framer.com/motion/)
 
-💻 User Story 4: Sauberer, wartbarer Code und Struktur
-Beschreibung:
-Als Entwickler möchte ich einen modularen und gut dokumentierten Code, um später einfach neue Features (z. B. Leaderboard, Sound-Effekte) hinzufügen zu können.
+---
 
-Akzeptanzkriterien:
+## 📁 Projektstruktur
 
-Der Code ist in logische Module unterteilt (Spielmechanik, UI, Logik).
+```bash
+├── app/                  # Next.js App Router
+├── components/           # UI-Komponenten (GameBoard, Overlay, etc.)
+├── hooks/                # Eigene React-Hooks
+├── lib/                  # Spiellogik, z. B. Tetris-Engine
+├── public/               # Assets
+├── styles/               # Tailwind Styles & Konfiguration
+├── types/                # TypeScript Typdefinitionen
+├── Dockerfile            # Container-Definition
+├── compose.yaml          # Docker-Compose Setup
+└── ...
+```
 
-Kommentare und Dokumentation sind vorhanden.
+---
 
-Einheitliche Coding-Standards werden eingehalten.
+## ⌨️ Steuerung
 
-🏆 User Story 5: Erweiterungsoption: Leaderboard
-Beschreibung:
-Als Spieler möchte ich meine Punktzahl mit anderen vergleichen können, um meinen Fortschritt zu messen.
+| Taste           | Aktion                  |
+|----------------|--------------------------|
+| ⬅️ / ➡️        | Block nach links/rechts  |
+| ⬇️              | Block fallen lassen      |
+| ⬆️              | Block rotieren           |
+| Space           | Block sofort platzieren  |
+| R               | Spiel zurücksetzen       |
 
-Akzeptanzkriterien:
+---
 
-Nach Spielende wird der Punktestand angezeigt.
+## 🐳 Docker
 
-Es gibt eine einfache Möglichkeit, den Highscore lokal (oder später via Backend) zu speichern und anzuzeigen.
+### App bauen und starten:
 
-🚀 Features
-✔️ Klassisches Tetris-Gameplay mit zufälligen Tetromino-Formen.
+```bash
+docker compose up --build
+```
 
-✔️ Steuerung über Pfeiltasten (Bewegung und Drehung) und Leertaste (schnelles Fallen).
+> Siehe `README.Docker.md` für detaillierte Docker-Anweisungen
 
-✔️ Responsive Design – spielbar auf Desktop, Tablet und Smartphone.
 
-✔️ Punktesystem und Levelmechanik, um die Schwierigkeit mit der Zeit zu steigern.
-
-✔️ Cross-Browser-Kompatibilität für gängige Browser (Chrome, Firefox, Edge, Safari).
-
-✔️ Erweiterungspotenzial für zukünftige Features wie ein Leaderboard und Sound-Effekte.
-
-🎮 Steuerung
-⬅️⬆️➡️⬇️ Pfeiltasten: Bewegung & Drehung der Tetrominos.
-
-⏹️ Leertaste: Block sofort fallen lassen.
-
-📂 Projektstruktur
-bash
-Kopieren
-/tetris
-│── index.html # Hauptdatei mit Spielfläche & Steuerung
-│── script.js # Spiellogik (Tetrominos, Kollisionen, Steuerung)
-│── README.md # Projektbeschreibung & Anleitung
-📦 Installation & Lokales Testing
-1️⃣ Lokale Ausführung
-Klone das Repository:
-
-bash
-Kopieren
-git clone https://github.com/R0tBart/tytris-planB
-cd tytris-planB
-Öffne index.html im Browser oder starte es über den Live Server in VS Code.
-
-2️⃣ Mit Docker ausführen (optional, für spätere Nutzung)
-Falls du das Spiel in einem Docker-Container ausführen möchtest (zukünftiges Deployment):
-
-bash
-Kopieren
-docker build -t tetris-game .
-docker run -p 8080:80 tetris-game
-Öffne den Browser und gehe zu: http://localhost:8080
-
-🤝 Mitwirken (SCRUM-Prozess für Contributors)
-Dieses Projekt nutzt SCRUM als agiles Framework, um es kontinuierlich zu verbessern. Wenn du mitmachen möchtest:
-
-Neues Feature oder Bug melden: Erstelle ein Issue.
-
-Forke das Repository und entwickle in einem Feature-Branch:
-https://github.com/R0tBart/tytris-planB
-
-Pull-Request (PR) stellen & am Code-Review teilnehmen.
 
 📜 Lizenz
 🔓 Dieses Projekt steht unter der MIT-Lizenz – du kannst es gerne nutzen, verbessern und teilen!
