@@ -9,7 +9,7 @@
 ### 1. Repository klonen
 
 ```bash
-git clone https://github.com/yourusername/modern-tetris.git
+git clone https://github.com/R0tBart/tytris-planB
 cd modern-tetris
 ```
 
