@@ -1,24 +1,26 @@
-export interface Cell {
+// Typen für das Tetris-Spiel
+export interface BoardCell {
   color: string
   merged: boolean
 }
 
-export type Board = (Cell | null)[][]
+export type Board = (BoardCell | null)[][]
 
 export interface Position {
   x: number
   y: number
 }
 
-export interface TetrominoData {
+export interface TetrominoShape {
   shape: number[][][]
   color: string
 }
 
 export interface Tetrominos {
-  [key: string]: TetrominoData
+  [key: string]: TetrominoShape
 }
 
+// Props für die Komponenten
 export interface GameBoardProps {
   board: Board
   currentPiece: string | null
@@ -36,16 +38,23 @@ export interface GameStatsProps {
   isSmallScreen?: boolean
 }
 
-export interface GameControlsProps {
-  gameStarted: boolean
-  gameOver: boolean
-  onStart: () => void
-  onMove?: (dir: number) => void
-  onRotate?: () => void
-  onDrop?: () => void
-  onDropToBottom?: () => void
-  onToggleMute?: () => void
-  isMuted?: boolean
-  isSmallScreen?: boolean
+
+// Sound-Manager Typen
+export interface SoundEffect {
+  name: string
+  path: string
 }
 
+
+export type GameControlsProps = {
+  gameStarted: boolean;
+  gameOver: boolean;
+  onStart: () => void;
+  onMove: (direction: number) => void;
+  onRotate: () => void;
+  onDrop: () => void;
+  onDropToBottom: () => void;
+  onToggleMute?: () => void;
+  isMuted?: boolean;
+  isSmallScreen?: boolean;
+};
