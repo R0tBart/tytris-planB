@@ -18,7 +18,6 @@ class SoundManager {
 
     // Soundeffekte laden
     this.sounds = {
-      move: new Audio("/sounds/move.mp3"),
       rotate: new Audio("/sounds/rotate.mp3"),
       drop: new Audio("/sounds/drop.mp3"),
       clearLine: new Audio("/sounds/clear-line.mp3"),
