@@ -88,7 +88,7 @@ export default function TetrisGame() {
   const movePiece = useCallback(
     (dir: number) => {
       if (!gameOver && gameStarted && currentPiece !== null && !checkCollision(board, currentPiece, position.x + dir, position.y, rotation)) {
-            setPosition((prev) => ({ ...prev, x: prev.x + dir }))
+            setPosition((prev: Position) => ({ ...prev, x: prev.x + dir }))
             soundManager.play("move")
       }
     },
@@ -110,7 +110,7 @@ export default function TetrisGame() {
   const dropPiece = useCallback(() => {
     if (!gameOver && gameStarted && currentPiece) {
       if (!checkCollision(board, currentPiece, position.x, position.y + 1, rotation)) {
-        setPosition((prev) => ({ ...prev, y: prev.y + 1 }))
+        setPosition((prev: Position) => ({ ...prev, y: prev.y + 1 }))
       } else {
         // Piece has landed
         updateBoard()
@@ -125,7 +125,7 @@ export default function TetrisGame() {
       while (!checkCollision(board, currentPiece, position.x, newY + 1, rotation)) {
         newY += 1
       }
-      setPosition((prev) => ({ ...prev, y: newY }))
+      setPosition((prev: Position) => ({ ...prev, y: newY }))
       soundManager.play("drop")
       updateBoard()
     }
@@ -157,10 +157,10 @@ export default function TetrisGame() {
     // Check for completed rows
     let clearedRows = 0
     for (let y = 0; y < 20; y++) {
-      if (newBoard[y].every((cell) => cell !== null)) {
+      if (newBoard[y].every((cell: { color: string; merged: boolean } | null) => cell !== null)) {
         // Remove the row and add an empty row at the top
         newBoard.splice(y, 1)
-        newBoard.unshift(Array(10).fill(null))
+        newBoard.unshift(Array(10).fill(null) as Array<{ color: string; merged: boolean } | null>)
         clearedRows += 1
         y -= 1 // Check the same row again
       }
@@ -176,12 +176,12 @@ export default function TetrisGame() {
       }
 
       const points = [0, 40, 100, 300, 1200][clearedRows] * (level + 1)
-      setScore((prev) => prev + points)
-      setRows((prev) => {
-        const newRows = prev + clearedRows
+      setScore((prev: number) => prev + points)
+      setRows((prev: number) => {
+        const newRows: number = prev + clearedRows
         // Level up every 10 rows
         if (Math.floor(newRows / 10) > Math.floor(prev / 10)) {
-          setLevel((prev) => prev + 1)
+          setLevel((prev: number) => prev + 1)
           // Speed up drop time
           setDropTime(1000 * Math.pow(0.8, Math.floor(newRows / 10)))
           // Spiele Level-Up Sound
@@ -227,6 +227,10 @@ export default function TetrisGame() {
       }
 
       if (gameOver) {
+        // Bei Game Over kann man mit Leertaste neu starten
+        if (e.keyCode === 32) {
+          startGame()
+        }
         return
       }
 
@@ -272,6 +276,9 @@ export default function TetrisGame() {
     }
   }, [])
 
+  // Füge einen visuellen Effekt für Game Over hinzu
+  const gameOverEffect = gameOver ? "opacity-70 blur-[1px]" : ""
+
   return (
     <div
       className={`
@@ -281,14 +288,21 @@ export default function TetrisGame() {
       max-w-full
     `}
     >
-      <GameBoard
-        board={board}
-        currentPiece={currentPiece}
-        position={position}
-        rotation={rotation}
-        width={boardSize.width}
-        height={boardSize.height}
-      />
+      <div className={`relative ${gameOverEffect}`}>
+        <GameBoard
+          board={board}
+          currentPiece={currentPiece}
+          position={position}
+          rotation={rotation}
+          width={boardSize.width}
+          height={boardSize.height}
+        />
+        {gameOver && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="bg-red-500/20 w-full h-full"></div>
+          </div>
+        )}
+      </div>
       <div
         className={`
         flex 
@@ -311,6 +325,7 @@ export default function TetrisGame() {
           onDrop={dropPiece}
           onDropToBottom={dropPieceToBottom}
           isSmallScreen={isSmallScreen}
+          score={score}
         />
       </div>
     </div>

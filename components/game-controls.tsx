@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ArrowDown, ArrowLeft, ArrowRight, RotateCw, MoveVertical, Volume2, VolumeX } from "lucide-react"
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, RotateCw, MoveVertical, RefreshCw } from "lucide-react"
 import type { GameControlsProps } from "@/types/tetris-types"
 
 export default function GameControls({
@@ -12,9 +12,8 @@ export default function GameControls({
   onRotate,
   onDrop,
   onDropToBottom,
-  onToggleMute,
-  isMuted = false,
   isSmallScreen = false,
+  score = 0,
 }: GameControlsProps) {
   // Touch-Steuerung für Desktop-Touchscreens und Tablets
   const renderTouchControls = () => (
@@ -57,44 +56,56 @@ export default function GameControls({
         <span className="mt-1 text-slate-400 text-[10px] sm:text-xs">Fallen</span>
       </button>
 
-      <button className="flex flex-col items-center touch-manipulation" onClick={() => onToggleMute && onToggleMute()}>
-        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-md bg-slate-800 flex items-center justify-center">
-          {isMuted ? <VolumeX size={isSmallScreen ? 16 : 18} /> : <Volume2 size={isSmallScreen ? 16 : 18} />}
+      <div className="flex flex-col items-center">
+        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-md bg-slate-800 flex items-center justify-center opacity-0">
+          <ArrowUp size={isSmallScreen ? 16 : 18} />
         </div>
-        <span className="mt-1 text-slate-400 text-[10px] sm:text-xs">Ton</span>
-      </button>
+        <span className="mt-1 text-transparent text-[10px] sm:text-xs">Drehen</span>
+      </div>
     </div>
   )
 
-  // Verwende konsistente Klassennamen für Server- und Client-Rendering
-  const containerClassName = `bg-slate-900 p-3 sm:p-4 rounded-md border border-slate-700 shadow-md ${isSmallScreen ? "w-[140px] sm:w-[160px]" : "w-full max-w-[200px]"}`
+  // Game Over Anzeige
+  const renderGameOver = () => (
+    <div className="text-center">
+      <h3 className="text-xl sm:text-2xl font-bold mb-2 text-red-500">Game Over</h3>
+      <div className="bg-slate-800 p-3 rounded-md mb-3">
+        <p className="text-sm sm:text-base text-slate-300 mb-1">Dein Ergebnis:</p>
+        <p className="text-xl sm:text-2xl font-bold text-emerald-500 mb-2">{score}</p>
+        <p className="text-xs sm:text-sm text-slate-400 mb-3">Versuche es erneut und verbessere deinen Highscore!</p>
+      </div>
+      <Button
+        onClick={onStart}
+        className="w-full bg-emerald-600 hover:bg-emerald-700 text-sm sm:text-base py-2 flex items-center justify-center gap-2"
+      >
+        <RefreshCw size={16} />
+        Neu starten
+      </Button>
+    </div>
+  )
+
+  // Start Game Anzeige
+  const renderStartGame = () => (
+    <div className="text-center">
+      <h3 className="text-base sm:text-lg font-bold mb-1 sm:mb-2">Tetris</h3>
+      <p className="text-xs sm:text-sm text-slate-400 mb-2 sm:mb-4">Drücke Leertaste oder klicke unten</p>
+      <Button onClick={onStart} className="w-full bg-emerald-600 hover:bg-emerald-700 text-xs sm:text-sm py-1 sm:py-2">
+        Spiel starten
+      </Button>
+    </div>
+  )
 
   return (
-    <div className={containerClassName}>
-      {!gameStarted || gameOver ? (
-        <div className="text-center">
-          <h3 className="text-base sm:text-lg font-bold mb-1 sm:mb-2">{gameOver ? "Game Over" : "Tetris"}</h3>
-          <p className="text-xs sm:text-sm text-slate-400 mb-2 sm:mb-4">
-            {gameOver ? "Versuche es erneut!" : "Drücke Leertaste oder klicke unten"}
-          </p>
-          <Button
-            onClick={onStart}
-            className="w-full bg-emerald-600 hover:bg-emerald-700 text-xs sm:text-sm py-1 sm:py-2"
-          >
-            {gameOver ? "Neu starten" : "Spiel starten"}
-          </Button>
-
-          {/* Sound-Steuerung */}
-          <div className="mt-2 flex justify-center">
-            <button
-              onClick={() => onToggleMute && onToggleMute()}
-              className="flex items-center gap-1 text-xs text-slate-400 hover:text-white"
-            >
-              {isMuted ? <VolumeX size={14} /> : <Volume2 size={14} />}
-              <span>{isMuted ? "Ton ein" : "Ton aus"}</span>
-            </button>
-          </div>
-        </div>
+    <div
+      className={`
+      bg-slate-900 p-3 sm:p-4 rounded-md border border-slate-700 shadow-md
+      ${isSmallScreen ? "w-[140px] sm:w-[160px]" : "w-full max-w-[200px]"}
+    `}
+    >
+      {!gameStarted ? (
+        renderStartGame()
+      ) : gameOver ? (
+        renderGameOver()
       ) : (
         <div className="space-y-2 sm:space-y-4">
           <h3 className="text-xs sm:text-sm font-medium text-slate-400">Steuerung</h3>
@@ -104,4 +115,3 @@ export default function GameControls({
     </div>
   )
 }
-
