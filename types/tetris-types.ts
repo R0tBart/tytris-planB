@@ -38,23 +38,20 @@ export interface GameStatsProps {
   isSmallScreen?: boolean
 }
 
+export interface GameControlsProps {
+  gameStarted: boolean
+  gameOver: boolean
+  onStart: () => void
+  onMove?: (dir: number) => void
+  onRotate?: () => void
+  onDrop?: () => void
+  onDropToBottom?: () => void
+  isSmallScreen?: boolean
+  score?: number
+}
 
 // Sound-Manager Typen
 export interface SoundEffect {
   name: string
   path: string
 }
-
-
-export type GameControlsProps = {
-  gameStarted: boolean;
-  gameOver: boolean;
-  onStart: () => void;
-  onMove: (direction: number) => void;
-  onRotate: () => void;
-  onDrop: () => void;
-  onDropToBottom: () => void;
-  onToggleMute?: () => void;
-  isMuted?: boolean;
-  isSmallScreen?: boolean;
-};
