@@ -97,3 +97,14 @@ docker compose up --build
 🔓 Dieses Projekt steht unter der MIT-Lizenz – du kannst es gerne nutzen, verbessern und teilen!
 
 ✨ Viel Spaß beim Spielen & Entwickeln! 🚀👾
+
+### Wie gesagt wen ihr mit machen möchtet, kann ich dir gerne helfen! 🤖
+⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️⬇️
+
+### 1. Repository klonen
+
+```bash
+git clone https://github.com/R0tBart/tytris-planB
+cd modern-tetris
+```
+### Und los geht`s! 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀�
